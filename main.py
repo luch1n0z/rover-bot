@@ -660,7 +660,6 @@ def main() -> None:
     on_flush=False,
     update_interval=30,
 )
-    )  # persistenza su file [web:218]
 
     app = Application.builder().token(BOT_TOKEN).persistence(persistence).post_init(post_init).build()
 
