@@ -45,7 +45,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
 # Esempio: ADMIN_IDS="12345678,98765432"
 ADMIN_IDS = {
     int(x.strip())
-    for x in os.getenv("1911565433", "").split(",")
+    for x in os.getenv("ADMIN_IDS", "1911565433").split(",")  # ← "ADMIN_IDS"
     if x.strip().isdigit()
 }
 
