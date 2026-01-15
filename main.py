@@ -651,12 +651,9 @@ def main() -> None:
 
     if not ADMIN_IDS:
         logger.warning("ADMIN_IDS vuoto: nessuno potrà fare inizio/fine passeggiata.")
-
+        
     persistence = PicklePersistence(
         filepath="/tmp/persistence.pickle",
-        store_user_data=True,
-        store_chat_data=True,
-        store_bot_data=True,
         single_file=True,
     )
 
