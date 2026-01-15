@@ -39,7 +39,7 @@ Thread(target=start_http_server, daemon=True).start()
 # CONFIG
 # ----------------------------
 TZ = ZoneInfo(os.getenv("TIMEZONE", "Europe/Rome"))
-BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8549356098:AAGSRI0-bdadS-1aHkH7fK4E4_j7FKUEy7Y").strip()
 
 # Metti qui il TUO user_id Telegram (numero) e, se vuoi, altri admin separati da virgola
 # Esempio: ADMIN_IDS="12345678,98765432"
