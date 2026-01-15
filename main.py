@@ -1,7 +1,6 @@
 import os
 import logging
 import secrets
-from telegram.ext import PersistenceInput  # ← Aggiungi in cima
 from dataclasses import dataclass
 from datetime import datetime, timedelta, time
 from zoneinfo import ZoneInfo
@@ -653,15 +652,21 @@ def main() -> None:
     if not ADMIN_IDS:
         logger.warning("ADMIN_IDS vuoto: nessuno potrà fare inizio/fine passeggiata.")
 
-   persistence = PicklePersistence(
-    filepath="/tmp/persistence.pickle",
-    store_user_data=True,
-    store_chat_data=True,
-    store_bot_data=True,
-    single_file=True,
-)
+    persistence = PicklePersistence(
+        filepath="/tmp/persistence.pickle",
+        store_user_data=True,
+        store_chat_data=True,
+        store_bot_data=True,
+        single_file=True,
+    )
 
-    app = Application.builder().token(BOT_TOKEN).persistence(persistence).post_init(post_init).build()
+    app = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .persistence(persistence)
+        .post_init(post_init)
+        .build()
+    )
 
     # Conversation: /start per setup nome cane
     start_conv = ConversationHandler(
@@ -675,9 +680,7 @@ def main() -> None:
     )
 
     reminder_conv = ConversationHandler(
-        entry_points=[
-            CommandHandler("promemoria", reminder_start),
-        ],
+        entry_points=[CommandHandler("promemoria", reminder_start)],
         states={
             REM_TEXT: [MessageHandler(filters.TEXT & ~filters.COMMAND, reminder_text)],
             REM_WHEN: [MessageHandler(filters.TEXT & ~filters.COMMAND, reminder_when)],
@@ -693,16 +696,13 @@ def main() -> None:
     app.add_handler(CommandHandler("help", cmd_help))
     app.add_handler(CommandHandler("report", cmd_report))
 
-    # Admin commands
     app.add_handler(CommandHandler("inizio", cmd_admin_start))
     app.add_handler(CommandHandler("fine", cmd_admin_stop))
-    app.add_handler(CommandHandler("report_admin", cmd_admin_report))  # opzionale
+    app.add_handler(CommandHandler("report_admin", cmd_admin_report))
 
     app.add_handler(CallbackQueryHandler(on_callback))
 
-    # Nota: polling. Always-on dipende dall'hosting.
     app.run_polling(allowed_updates=Update.ALL_TYPES)
-
 
 if __name__ == "__main__":
     main()
