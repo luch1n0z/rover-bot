@@ -1,6 +1,7 @@
 import os
 import logging
 import secrets
+from telegram.ext import PersistenceInput  # ← Aggiungi in cima
 from dataclasses import dataclass
 from datetime import datetime, timedelta, time
 from zoneinfo import ZoneInfo
@@ -653,11 +654,12 @@ def main() -> None:
         logger.warning("ADMIN_IDS vuoto: nessuno potrà fare inizio/fine passeggiata.")
 
     persistence = PicklePersistence(
-        filepath="persistence.pickle",
-        store_user_data=True,
-        store_chat_data=True,
-        store_bot_data=True,
-        update_interval=30,
+    filepath="persistence.pickle",
+    store_data=PersistenceInput.ALL,  # ← AGGIUNGI QUESTO
+    single_file=True,
+    on_flush=False,
+    update_interval=30,
+)
     )  # persistenza su file [web:218]
 
     app = Application.builder().token(BOT_TOKEN).persistence(persistence).post_init(post_init).build()
