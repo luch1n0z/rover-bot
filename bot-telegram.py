@@ -19,6 +19,21 @@ from telegram.ext import (
     filters,
     PicklePersistence,
 )
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from threading import Thread
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"OK")
+
+def start_http_server():
+    port = int(os.getenv("PORT", "10000"))
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    server.serve_forever()
+
+Thread(target=start_http_server, daemon=True).start()
 
 # ----------------------------
 # CONFIG
