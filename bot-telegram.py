@@ -641,8 +641,9 @@ async def cmd_admin_report(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 # ----------------------------
 async def post_init(app: Application) -> None:
     # Ripianifica promemoria dopo restart [web:167]
+    
+    await app.bot.delete_webhook(drop_pending_updates=True)
     await reschedule_all_reminders(app)
-
 
 def main() -> None:
     if not BOT_TOKEN:
