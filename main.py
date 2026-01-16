@@ -113,10 +113,10 @@ def get_or_init_user(context: ContextTypes.DEFAULT_TYPE, user_id: int) -> dict:
 
 
 def get_or_init_bot_data(context: ContextTypes.DEFAULT_TYPE) -> dict:
-    bd = context.application.bot_data
-    bd.setdefault(BOT_CLIENTS_KEY, {})       # code -> user_id
-    bd.setdefault(BOT_WALKS_KEY, [])         # list of dict
-    bd.setdefault(BOT_ACTIVE_WALKS_KEY, {})  # code -> dict
+    bd = context.bot_data  # scrivibile
+    bd.setdefault(BOT_CLIENTS_KEY, {})
+    bd.setdefault(BOT_WALKS_KEY, [])
+    bd.setdefault(BOT_ACTIVE_WALKS_KEY, {})
     return bd
 
 
