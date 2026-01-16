@@ -27,7 +27,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"OK")
-
+      def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
+        # Nessun body per HEAD
 def start_http_server():
     port = int(os.getenv("PORT", "10000"))
     server = HTTPServer(("0.0.0.0", port), Handler)
@@ -105,7 +108,6 @@ def calc_price(duration_minutes: int) -> int:
 
 
 def get_or_init_user(context: ContextTypes.DEFAULT_TYPE, user_id: int) -> dict:
-    ud = context.application.user_data.setdefault(user_id, {})
     ud.setdefault("dog_name", "")
     ud.setdefault("client_code", "")
     ud.setdefault("reminders", [])
