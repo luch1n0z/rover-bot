@@ -27,7 +27,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"OK")
-      def do_HEAD(self):
+    def do_HEAD(self):
         self.send_response(200)
         self.end_headers()
         # Nessun body per HEAD
