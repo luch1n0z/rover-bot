@@ -21,6 +21,12 @@ from telegram.ext import (
 )
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import Thread
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/ping", methods=["GET", "HEAD"])
+def ping():
+    return "OK", 200
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
